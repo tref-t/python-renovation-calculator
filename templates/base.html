@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk" class="h-full bg-slate-50 text-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Будівельні калькулятори онлайн{% endblock %} — БудКалькулятор</title>
+    <meta name="description" content="{% block meta_description %}Професійні онлайн-калькулятори будівельних матеріалів: стяжка, плитка, ламінат, газоблок, цегла, штукатурка та фарба. Розрахунок запасу та упаковок.{% endblock %}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon.png' %}">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/logo.png' %}">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- HTMX CDN -->
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+
+    <style>
+        /* Стилі для друку PDF-кошторисів */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+                font-size: 12pt;
+            }
+            .print-full-width {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .shadow-sm, .shadow-md, .shadow-lg {
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0 !important;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="flex flex-col min-h-full font-sans antialiased">
+    <!-- Верхня панель навігації -->
+    <header class="no-print sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Логотип -->
+                <div class="flex items-center gap-3">
+                    <a href="{% url 'core:index' %}" class="flex items-center gap-3 group">
+                        <img src="{% static 'img/logo.png' %}" alt="МайстерОк" class="w-10 h-10 rounded-xl object-contain shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                        <div>
+                            <span class="text-xl font-bold tracking-tight text-slate-900 block leading-none">МайстерОк</span>
+                            <span class="text-xs font-medium text-amber-600 tracking-wide uppercase">Будівельні калькулятори</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Пошук та навігація -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="{% url 'core:index' %}" class="text-sm font-medium text-slate-700 hover:text-amber-600 transition-colors">Каталог</a>
+                    <a href="{% url 'core:about' %}" class="text-sm font-medium text-slate-700 hover:text-amber-600 transition-colors">Про стандарти</a>
+                </nav>
+
+                <!-- Швидкий пошук у шапці -->
+                <div class="hidden sm:block flex-1 max-w-xs mx-4">
+                    <form action="{% url 'core:index' %}" method="get" class="relative">
+                        <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Швидкий пошук..." class="w-full bg-slate-100 text-sm rounded-lg pl-9 pr-4 py-2 border-transparent focus:border-amber-500 focus:bg-white focus:ring-0 transition">
+                        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основний контент -->
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Футер -->
+    <footer class="no-print bg-slate-900 text-slate-300 border-t border-slate-800 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <img src="{% static 'img/logo.png' %}" alt="МайстерОк" class="w-8 h-8 rounded-lg object-contain">
+                        <span class="text-lg font-bold text-white">МайстерОк</span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        Безкоштовні інженерні калькулятори будівельних матеріалів для виконробів, майстрів та тих, хто робить ремонт своїми руками. Розрахунки за нормами ДСТУ та СНиП.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider text-white mb-4">Популярні розрахунки</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="{% url 'calculators:detail' 'laminate' %}" class="hover:text-amber-400 transition-colors">Ламінат та підкладка</a></li>
+                        <li><a href="{% url 'calculators:detail' 'screed' %}" class="hover:text-amber-400 transition-colors">Стяжка підлоги</a></li>
+                        <li><a href="{% url 'calculators:detail' 'tile' %}" class="hover:text-amber-400 transition-colors">Керамічна плитка та клей</a></li>
+                        <li><a href="{% url 'calculators:detail' 'gasblock' %}" class="hover:text-amber-400 transition-colors">Газобетонні блоки</a></li>
+                        <li><a href="{% url 'calculators:detail' 'plaster' %}" class="hover:text-amber-400 transition-colors">Штукатурка стін</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider text-white mb-4">Будівельна точність</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-3">
+                        Усі алгоритми враховують технологічні коефіцієнти запасу на підрізку (+5–15%), округлення до цілих упаковок або мішків та норми витрати сумішей.
+                    </p>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 text-xs text-amber-400 font-medium">
+                        <span>●</span> 100% точність розрахунків
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-xs text-slate-500">
+                &copy; 2026 МайстерОк. Всі права захищено.
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
