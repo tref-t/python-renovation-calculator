@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Про будівельні норми та стандарти розрахунків — МайстерОк{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-8">
+        <a href="{% url 'core:index' %}" class="inline-flex items-center gap-1 text-sm font-medium text-amber-600 hover:text-amber-700">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Назад до каталогу калькуляторів
+        </a>
+        <h1 class="text-3xl font-extrabold text-slate-900 mt-3">Будівельні норми та методологія розрахунку</h1>
+    </div>
+
+    <div class="prose prose-slate max-w-none space-y-6 text-slate-700 leading-relaxed">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200">
+            <h2 class="text-xl font-bold text-slate-900 mb-3">Чому не можна просто ділити площу на площу?</h2>
+            <p>
+                Початківці часто припускаються фатальної помилки: ділять площу кімнати на площу одного листа чи плитки й купують рівно стільки. 
+                На реальному об'єкті матеріали ріжуться, залишаються кутові обрізки, з'являється бій при доставці або усадка сумішей.
+            </p>
+            <p class="mt-3">
+                У калькуляторах «МайстерОк» закладено принципи реального досвіду виконробів:
+            </p>
+            <ul class="list-disc pl-5 mt-2 space-y-1.5 text-sm">
+                <li><strong>Листові матеріали та плитка:</strong> запас від +5% (пряме укладання) до +15–20% (діагональ, ялинка, складний периметр).</li>
+                <li><strong>Сухі суміші та стяжка:</strong> коефіцієнт усадки та нерівностей плити +15% (густина ЦПС ~2000 кг/м³).</li>
+                <li><strong>Рулонні матеріали:</strong> нахльост 10–15 см між полотнами (+15%).</li>
+                <li><strong>Кріплення та клини:</strong> технологічний запас +5% на втрату і брак.</li>
+            </ul>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200">
+            <h2 class="text-xl font-bold text-slate-900 mb-3">Стандарти та технологічні карти</h2>
+            <p>
+                Формули розрахунків спираються на чинні нормативи ДСТУ, СНиП та офіційні технологічні регламенти виробників:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 text-sm">
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="font-bold text-slate-900 block mb-1">Кладка та стіни</span>
+                    <span>ДСТУ Б В.2.7-7:2008, СНиП II-22-81 (Кам'яні та армокам'яні конструкції)</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="font-bold text-slate-900 block mb-1">Підлоги та стяжки</span>
+                    <span>СНиП 2.03.13-88 (Підлоги. Норми проектування), ДСТУ-Н Б В.2.6-212</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="font-bold text-slate-900 block mb-1">Оздоблювальні суміші</span>
+                    <span>Технологічні карти Knauf (Rotband, HP Start), Ceresit (CM 11, CT 17)</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="font-bold text-slate-900 block mb-1">Плиткові роботи</span>
+                    <span>ДСТУ Б В.2.6-145:2010 (Опорядження фасадів та інтер'єрів плиткою)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
